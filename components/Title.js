@@ -3,14 +3,20 @@ import {View, Text, StyleSheet} from 'react-native';
 const Title = () => {
   return (
     <View style={styles.container}>
-      <Text>Quizzler</Text>
+      <Text style={styles.title}>Quizzler</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'yellow',
+    paddingVertical: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 36,
+    fontWeight: '600',
   },
 });
 
