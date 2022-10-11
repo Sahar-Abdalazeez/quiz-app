@@ -5,7 +5,8 @@ const Quiz = ({navigation}) => {
   const [questions, setQuestion] = useState();
   const [ques, setQues] = useState(0);
   const getQuiz = async () => {
-    const url = 'https://opentdb.com/api.php?amount=10&type=multiple';
+    const url =
+      'https://opentdb.com/api.php?amount=10&type=multiple&encode=url3986';
     const res = await fetch(url);
     const data = await res.json();
     setQuestion(data.results);
@@ -26,7 +27,7 @@ const Quiz = ({navigation}) => {
           <View style={styles.options}>
             <View style={styles.top}>
               <Text style={styles.question}>
-                Q{ques + 1}.{questions[ques].question}
+                Q{ques + 1}.{decodeURIComponent(questions[ques].question)}
               </Text>
             </View>
             <TouchableOpacity style={styles.optionButton}>
