@@ -1,9 +1,15 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-const Title = () => {
+import styled from 'styled-components';
+
+const TitleText = styled(Text)`
+  font-size: 36px;
+  font-weight: 600;
+`;
+const Title = ({title, style}) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Quizzler</Text>
+      <TitleText style={style}>{title}</TitleText>
     </View>
   );
 };
@@ -13,10 +19,6 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  title: {
-    fontSize: 36,
-    fontWeight: '600',
   },
 });
 
