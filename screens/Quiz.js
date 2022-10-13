@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   button: {
-    backgroundColor: '#1a759f',
+    backgroundColor: '#a85d03',
     padding: 12,
     paddingHorizontal: 16,
     borderRadius: 16,
@@ -176,16 +176,18 @@ const styles = StyleSheet.create({
   },
   question: {
     fontSize: 28,
+    color: '#a85d03',
+    fontWeight: '600',
   },
   option: {
-    fontSize: 18,
+    fontSize: 26,
     fontWeight: '500',
     color: 'white',
   },
   optionButton: {
     paddingVertical: 12,
     marginVertical: 6,
-    backgroundColor: '#34A0A4',
+    backgroundColor: '#f99113',
     paddingHorizontal: 12,
     borderRadius: 12,
   },
