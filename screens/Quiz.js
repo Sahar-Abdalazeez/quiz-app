@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import LottieView from 'lottie-react-native';
 
 const Quiz = ({navigation}) => {
   const [questions, setQuestion] = useState();
@@ -42,6 +43,12 @@ const Quiz = ({navigation}) => {
   }, []);
 
   //handle next pressed
+  const handlePrevPressed = () => {
+    setQues(ques - 1);
+    setOptions(generateOptionsAndShuffleArray(questions[ques - 1]));
+  };
+
+  //handle next pressed
   const handleSkipPressed = () => {
     setQues(ques + 1);
     setOptions(generateOptionsAndShuffleArray(questions[ques + 1]));
@@ -75,7 +82,7 @@ const Quiz = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
-      {questions && (
+      {questions ? (
         <>
           <View style={styles.options}>
             <View style={styles.top}>
@@ -113,11 +120,13 @@ const Quiz = ({navigation}) => {
             </TouchableOpacity>
           </View>
           <View style={styles.bottom}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => handleSelectedOption(options[0])}>
-              <Text style={styles.buttonText}>PREV</Text>
-            </TouchableOpacity>
+            {ques >= 1 && (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => handlePrevPressed(options[0])}>
+                <Text style={styles.buttonText}>PREV</Text>
+              </TouchableOpacity>
+            )}
             {ques < 9 && (
               <TouchableOpacity
                 style={styles.button}
@@ -134,6 +143,12 @@ const Quiz = ({navigation}) => {
             )}
           </View>
         </>
+      ) : (
+        <LottieView
+          source={require('../assets/animations/loading.json')}
+          autoPlay
+          loop
+        />
       )}
     </View>
   );
