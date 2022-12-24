@@ -1,5 +1,7 @@
 import React from 'react';
-const win = require('../assets/images/highscore.png');
+import {Image, ScrollView} from 'react-native';
+const win = require('../assets/images/sad-face.png');
+
 import LottieView from 'lottie-react-native';
 
 import Title from '../components/Title';
@@ -8,26 +10,30 @@ import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 const Result = ({navigation, route}) => {
   const {score} = route.params;
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} flexGrow={1}>
       <Title style={styles.title} title="Result" />
       <Text style={styles.score}>{score}</Text>
 
       <View style={styles.bannerContainer}>
-        <LottieView
-          height={500}
-          width={500}
-          style={styles.banner}
-          source={require('../assets/animations/winner.json')}
-          autoPlay
-          loop
-        />
+        {score > 40 ? (
+          <LottieView
+            height={400}
+            width={400}
+            style={styles.banner}
+            source={require('../assets/animations/winner.json')}
+            autoPlay
+            loop
+          />
+        ) : (
+          <Image source={win} style={{width: 200, height: 200}} />
+        )}
       </View>
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Home')}>
         <Text style={styles.buttonText}>GO TO HOME</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -35,10 +41,12 @@ export default Result;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 40,
+    flexGrow: 1,
+    display: 'flex',
+    paddingTop: 20,
     paddingHorizontal: 20,
     height: '100%',
-    backgroundColor: 'white',
+    flex: 1,
   },
   title: {
     color: '#f38704',
@@ -51,11 +59,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   banner: {
-    width: 500,
+    width: 450,
   },
   bannerContainer: {
+    display: 'flex',
     alignItems: 'center',
     flex: 1,
+    height: 400,
   },
   button: {
     backgroundColor: '#f38704',

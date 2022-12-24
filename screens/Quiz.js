@@ -1,8 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import LottieView from 'lottie-react-native';
 
-const Quiz = ({navigation}) => {
+const Quiz = ({route, navigation}) => {
   const [questions, setQuestion] = useState();
   const [ques, setQues] = useState(0);
   const [options, setOptions] = useState([]);
@@ -29,19 +35,16 @@ const Quiz = ({navigation}) => {
     return array;
   }
   const getQuiz = async () => {
-    const url =
-      'https://opentdb.com/api.php?amount=10&type=multiple&encode=url3986';
+    const url = `https://opentdb.com/api.php?amount=10&difficulty=${route.params.difficulty}&type=multiple`;
     const res = await fetch(url);
     const data = await res.json();
     setQuestion(data.results);
     setOptions(generateOptionsAndShuffleArray(data.results[0]));
   };
-
   useEffect(() => {
     getQuiz();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   //handle next pressed
   const handlePrevPressed = () => {
     setQues(ques - 1);
@@ -80,12 +83,27 @@ const Quiz = ({navigation}) => {
       score: score,
     });
   };
+
+  console.log('route', route.params.difficulty);
+  console.log('ques', questions);
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {questions ? (
         <>
           <View style={styles.options}>
             <View style={styles.top}>
+              <View
+                style={[
+                  styles.difficulty,
+                  route.params.difficulty === 'hard'
+                    ? {backgroundColor: 'red'}
+                    : route.params.difficulty === 'medium'
+                    ? {backgroundColor: '#ffe6cc'}
+                    : {backgroundColor: '#00cc99'},
+                ]}>
+                <Text style={styles.label}>{route.params.difficulty}</Text>
+              </View>
               <Text style={styles.question}>
                 Q{ques + 1}.{decodeURIComponent(questions[ques].question)}
               </Text>
@@ -150,7 +168,7 @@ const Quiz = ({navigation}) => {
           loop
         />
       )}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -158,9 +176,10 @@ export default Quiz;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 40,
+    paddingTop: 20,
     paddingHorizontal: 20,
     height: '100%',
+    flex: 1,
   },
   top: {
     marginVertical: 16,
@@ -205,5 +224,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#f99113',
     paddingHorizontal: 12,
     borderRadius: 12,
+  },
+  difficulty: {
+    alignSelf: 'baseline',
+    borderRadius: 10,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 90,
+    marginLeft: 'auto',
+  },
+  label: {
+    color: 'black',
+    fontSize: 20,
+    textTransform: 'capitalize',
+    fontWeight: '800',
   },
 });

@@ -10,19 +10,19 @@ const Levels = ({navigation}) => {
       <View style={styles.levelsContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Quiz')}>
-          <Text style={styles.buttonText}>Simple</Text>
+          onPress={() => navigation.navigate('Quiz', {difficulty: 'easy'})}>
+          <Text style={styles.buttonText}>Easy</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Quiz')}>
+          onPress={() => navigation.navigate('Quiz', {difficulty: 'medium'})}>
           <Text style={styles.buttonText}>Medium</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Quiz')}>
+          onPress={() => navigation.navigate('Quiz', {difficulty: 'hard'})}>
           <Text style={styles.buttonText}>Hard</Text>
         </TouchableOpacity>
       </View>
